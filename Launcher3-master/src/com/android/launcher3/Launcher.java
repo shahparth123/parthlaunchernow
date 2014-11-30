@@ -146,7 +146,7 @@ public class Launcher extends Activity
     //extra
     static int state=0;
     SensorManager sm = null;
-  
+    static int qwe=0;
     
     
     /**
@@ -496,6 +496,8 @@ public class Launcher extends Activity
 /*extra*/
     public void onSensorChanged(int sensor, float[] values) {
         synchronized (this) {
+        	if(qwe==1)
+        	{
             Log.d(tag, "onSensorChanged: " + sensor + ", x: " +
 values[0] + ", y: " + values[1] + ", z: " + values[2]);
                        if (sensor == SensorManager.SENSOR_ACCELEROMETER) {
@@ -555,7 +557,9 @@ values[0] + ", y: " + values[1] + ", z: " + values[2]);
                 		state=6;
                 	}
                 }
+                
             }
+        	}
         }
     }
 
@@ -1298,6 +1302,7 @@ protected void onResume() {
         				.setCancelable(false)
         				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
         					public void onClick(DialogInterface dialog,int id) {
+        						qwe=1;
         						Toast.makeText(Launcher.this,"OK Button Click settings will be opened",Toast.LENGTH_SHORT).show();
         						// if this button is clicked, close
         						// current activity
@@ -1309,6 +1314,7 @@ protected void onResume() {
         					public void onClick(DialogInterface dialog,int id) {
         						// if this button is clicked, just close
         						// the dialog box and do nothing
+        						qwe=0;
         						Toast.makeText(Launcher.this,"NO Button Click ",Toast.LENGTH_SHORT).show();
             					
         						dialog.cancel();
