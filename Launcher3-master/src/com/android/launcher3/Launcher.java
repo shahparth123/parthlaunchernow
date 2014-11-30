@@ -29,6 +29,7 @@ import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.appwidget.AppWidgetHostView;
 import android.appwidget.AppWidgetManager;
@@ -39,6 +40,7 @@ import android.content.ComponentCallbacks2;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -1278,10 +1280,48 @@ protected void onResume() {
         wallpaperButton.setOnTouchListener(getHapticFeedbackTouchListener());
 
         View settingsButton = findViewById(R.id.settings_button);
+    	final Context context = this;
+
         settingsButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                startSettings();
+            	//added//
+            	AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+        				context);
+         
+        			// set title
+        			alertDialogBuilder.setTitle("Your Title");
+         
+        			// set dialog message
+        			alertDialogBuilder
+        				.setMessage("Move Mobile Head at Right -> Browser\nMove Mobile Head at Left -> Calculator\nMove Mobile Head at Down -> Gmail\nMove Mobile Screen at Below\nClick yes to activate")
+        				.setCancelable(false)
+        				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+        					public void onClick(DialogInterface dialog,int id) {
+        						Toast.makeText(Launcher.this,"OK Button Click settings will be opened",Toast.LENGTH_SHORT).show();
+        						// if this button is clicked, close
+        						// current activity
+        						//MainActivity.this.finish();
+        						//startSettings();
+        					}
+        				  })
+        				.setNegativeButton("No",new DialogInterface.OnClickListener() {
+        					public void onClick(DialogInterface dialog,int id) {
+        						// if this button is clicked, just close
+        						// the dialog box and do nothing
+        						Toast.makeText(Launcher.this,"NO Button Click ",Toast.LENGTH_SHORT).show();
+            					
+        						dialog.cancel();
+        					}
+        				});
+         
+        				// create alert dialog
+        				AlertDialog alertDialog = alertDialogBuilder.create();
+         
+        				// show it
+        				alertDialog.show();
+            	//end 
+            	//startSettings();
             }
         });
         settingsButton.setOnTouchListener(getHapticFeedbackTouchListener());
